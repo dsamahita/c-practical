@@ -1,0 +1,35 @@
+#include <iostream>
+
+using namespace std;
+
+// Recursive GCD function using Euclidean algorithm
+int gcdRecursive(int a, int b) {
+    if (b == 0)
+        return a;
+    return gcdRecursive(b, a % b);
+}
+
+// Iterative GCD function
+int gcdIterative(int a, int b) {
+    while (b != 0) {
+        int temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+int main() {
+    int num1, num2;
+
+    cout << "Enter two numbers: ";
+    cin >> num1 >> num2;
+
+    // Recursive method
+    cout << "GCD (Recursive) of " << num1 << " and " << num2 << " is: " << gcdRecursive(num1, num2) << endl;
+
+    // Iterative method
+    cout << "GCD (Iterative) of " << num1 << " and " << num2 << " is: " << gcdIterative(num1, num2) << endl;
+
+    return 0;
+}
