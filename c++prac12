@@ -1,0 +1,42 @@
+#include <iostream>
+#include <fstream>
+#include <filesystem>  // C++17 feature
+
+using namespace std;
+namespace fs = filesystem;
+
+void removeWhitespace(const string& inputFile, const string& outputFile) {
+    cout << "Current working directory: " << fs::current_path() << endl;
+
+    ifstream inFile(inputFile);
+    if (!inFile) {
+        cout << "Error: Cannot open '" << inputFile << "'! Make sure the file exists.\n";
+        return;
+    }
+
+    ofstream outFile(outputFile);
+    if (!outFile) {
+        cout << "Error: Cannot create '" << outputFile << "'! Check permissions.\n";
+        return;
+    }
+
+    char ch;
+    while (inFile.get(ch)) { 
+        if (!isspace(ch)) {
+            outFile.put(ch);
+        }
+    }
+
+    cout << "File copied successfully without whitespaces.\n";
+
+    inFile.close();
+    outFile.close();
+}
+
+int main() {
+    string inputFile = "c++prac12";
+    string outputFile = "output.txt";
+
+    removeWhitespace(inputFile, outputFile);
+    return 0;
+}
