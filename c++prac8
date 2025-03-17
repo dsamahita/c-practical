@@ -1,0 +1,142 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+class Matrix {
+private:
+    vector<vector<int>> mat;
+    int rows, cols;
+
+public:
+    // Constructor to initialize matrix
+    Matrix(int r, int c) : rows(r), cols(c) {
+        mat.resize(rows, vector<int>(cols, 0));
+    }
+
+    // Function to input matrix elements
+    void inputMatrix() {
+        cout << "Enter elements of " << rows << "x" << cols << " matrix:\n";
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                cin >> mat[i][j];
+            }
+        }
+    }
+
+    // Function to display the matrix
+    void displayMatrix() {
+        for (const auto& row : mat) {
+            for (int elem : row) {
+                cout << elem << " ";
+            }
+            cout << endl;
+        }
+    }
+
+    // Function to add two matrices
+    Matrix operator+(const Matrix& other) {
+        if (rows != other.rows || cols != other.cols) {
+            cout << "Error: Matrices must have the same dimensions for addition!\n";
+            return Matrix(0, 0);
+        }
+
+        Matrix sum(rows, cols);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                sum.mat[i][j] = mat[i][j] + other.mat[i][j];
+            }
+        }
+        return sum;
+    }
+
+    // Function to multiply two matrices
+    Matrix operator*(const Matrix& other) {
+        if (cols != other.rows) {
+            cout << "Error: Matrix multiplication not possible! (Cols of A != Rows of B)\n";
+            return Matrix(0, 0);
+        }
+
+        Matrix product(rows, other.cols);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < other.cols; j++) {
+                product.mat[i][j] = 0;
+                for (int k = 0; k < cols; k++) {
+                    product.mat[i][j] += mat[i][k] * other.mat[k][j];
+                }
+            }
+        }
+        return product;
+    }
+
+    // Function to find transpose of matrix
+    Matrix transpose() {
+        Matrix trans(cols, rows);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                trans.mat[j][i] = mat[i][j];
+            }
+        }
+        return trans;
+    }
+};
+
+// Main function with menu-driven program
+int main() {
+    int choice, r1, c1, r2, c2;
+
+    cout << "Enter rows and columns of Matrix A: ";
+    cin >> r1 >> c1;
+    Matrix A(r1, c1);
+    A.inputMatrix();
+
+    cout << "\n1. Sum of Matrices\n2. Product of Matrices\n3. Transpose of Matrix\n4. Exit";
+    
+    do {
+        cout << "\n\nEnter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: { // Sum of matrices
+                cout << "Enter rows and columns of Matrix B: ";
+                cin >> r2 >> c2;
+                Matrix B(r2, c2);
+                B.inputMatrix();
+
+                Matrix sum = A + B;
+                cout << "Sum of Matrices:\n";
+                sum.displayMatrix();
+                break;
+            }
+
+            case 2: { // Product of matrices
+                cout << "Enter rows and columns of Matrix B: ";
+                cin >> r2 >> c2;
+                Matrix B(r2, c2);
+                B.inputMatrix();
+
+                Matrix product = A * B;
+                cout << "Product of Matrices:\n";
+                product.displayMatrix();
+                break;
+            }
+
+            case 3: { // Transpose of matrix
+                Matrix trans = A.transpose();
+                cout << "Transpose of Matrix:\n";
+                trans.displayMatrix();
+                break;
+            }
+
+            case 4:
+                cout << "Exiting program...\n";
+                break;
+
+            default:
+                cout << "Invalid choice! Try again.\n";
+        }
+
+    } while (choice != 4);
+
+    return 0;
+}
