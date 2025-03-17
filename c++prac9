@@ -1,0 +1,73 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// Base class Person
+class Person {
+protected:
+    string name;
+
+public:
+    Person(string n) : name(n) {} // Constructor
+
+    // Virtual function for runtime polymorphism
+    virtual void display() {
+        cout << "Name: " << name << endl;
+    }
+
+    // Virtual destructor
+    virtual ~Person() {}
+};
+
+// Derived class Student
+class Student : public Person {
+private:
+    string course;
+    int marks;
+    int year;
+
+public:
+    Student(string n, string c, int m, int y) : Person(n), course(c), marks(m), year(y) {}
+
+    void display() override {
+        cout << "Student Name: " << name << endl;
+        cout << "Course: " << course << endl;
+        cout << "Marks: " << marks << endl;
+        cout << "Year: " << year << endl;
+    }
+};
+
+// Derived class Employee
+class Employee : public Person {
+private:
+    string department;
+    double salary;
+
+public:
+    Employee(string n, string d, double s) : Person(n), department(d), salary(s) {}
+
+    void display() override {
+        cout << "Employee Name: " << name << endl;
+        cout << "Department: " << department << endl;
+        cout << "Salary: rupees " << salary << endl;
+    }
+};
+
+// Main function
+int main() {
+    Person* p1 = new Student("Samahita", "Computer Science", 85, 1);
+    Person* p2 = new Employee("Sara", "HR", 50000);
+
+    cout << "\nDisplaying Student Details:\n";
+    p1->display(); // Calls Student's display()
+
+    cout << "\nDisplaying Employee Details:\n";
+    p2->display(); // Calls Employee's display()
+
+    // Free allocated memory
+    delete p1;
+    delete p2;
+
+    return 0;
+}
