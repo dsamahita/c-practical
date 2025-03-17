@@ -1,5 +1,48 @@
+#include <iostream>
+#include <cmath>
+#include <cstdlib>
 
-![c++pracss1](https://github.com/user-attachments/assets/ea7f4023-1d92-49b1-ab5f-96cdfdab0d08)
+using namespace std;
+
+double computeSeriesSum(int n) {
+    double total = 0.0;
+    for (int i = 1; i <= n; ++i) {
+        double term = 1.0 / pow(i, i);
+        if (i % 2 == 0) {
+            term = -term;
+        }
+        total += term;
+    }
+    return total;
+}
+
+int main(int argc, char* argv[]) {
+    int n;
+    if (argc > 1) {
+        n = atoi(argv[1]);
+        if (n <= 0) {
+            cout << " provide a positive integer for n." << endl;
+            return 1;
+        }
+    } else {
+        while (true) {
+            cout << "Enter the value of n: ";
+            cin >> n;
+            if (cin.fail() || n <= 0) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Invalid input.  enter a positive integer." << endl;
+            } else {
+                break;
+            }
+        }
+    }
+
+    double result = computeSeriesSum(n);
+    cout << "The sum of the series up to " << n << " terms is: " << result << endl;
+    return 0;
+}
+
 ![c++pracss1ou](https://github.com/user-attachments/assets/28edc22b-418f-4eb1-848a-157b3fd01570)
 ![c++pracss1ouuu](https://github.com/user-attachments/assets/7412aeac-024a-4f41-9c5e-36811a77bec5)
 
