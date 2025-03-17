@@ -1,0 +1,49 @@
+#include <iostream>
+#include <thread>   // For sleep function
+#include <chrono>   // For time delays
+
+using namespace std;
+
+// Structure for Traffic Signal Node
+struct TrafficSignal {
+    string color;
+    TrafficSignal* left;  // Next State
+    TrafficSignal* right; // Previous State
+
+    // Constructor
+    TrafficSignal(string col) {
+        color = col;
+        left = right = nullptr;
+    }
+};
+
+// Function to simulate traffic light cycles
+void startSimulation(TrafficSignal* current) {
+    while (true) { // Infinite loop for continuous simulation
+        cout << "Current Signal: " << current->color << endl;
+        
+        // Delay for 3 seconds before changing the signal
+        this_thread::sleep_for(chrono::seconds(3));
+
+        // Move to the next signal state
+        current = current->left;  
+    }
+}
+
+int main() {
+    // Creating Traffic Signal Tree
+    TrafficSignal* red = new TrafficSignal("RED");
+    TrafficSignal* green = new TrafficSignal("GREEN");
+    TrafficSignal* yellow = new TrafficSignal("YELLOW");
+
+    // Connecting nodes
+    red->left = green;
+    green->left = yellow;
+    yellow->left = red;  // Completing the cycle
+
+    // Start the simulation
+    cout << "Starting Traffic Signal Simulation..." << endl;
+    startSimulation(red); 
+
+    return 0;
+}
