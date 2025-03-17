@@ -1,0 +1,45 @@
+#include <iostream>
+#include <cctype>  // For tolower()
+#include <iomanip> // For formatting output
+using namespace std;
+
+void countAlphabets(const string &text) {
+    int frequency[26] = {0}; // Array to store letter frequencies
+
+    // Loop through each character in the input text
+    for (char ch : text) {
+        if (isalpha(ch)) { // Check if it's an alphabet
+            frequency[tolower(ch) - 'a']++; // Convert to lowercase and count
+        }
+    }
+
+    // Display the frequency table
+    cout << "\nAlphabet Frequency Table:\n";
+    cout << "-------------------------\n";
+    cout << "Letter | Count\n";
+    cout << "-------------------------\n";
+    for (int i = 0; i < 26; i++) {
+        if (frequency[i] > 0) {
+            cout << "   " << char(i + 'a') << "    |  " << frequency[i] << endl;
+        }
+    }
+}
+
+int main(int argc, char* argv[]) {
+    string inputText;
+
+    // If arguments are passed, concatenate them into inputText
+    if (argc > 1) {
+        for (int i = 1; i < argc; i++) {
+            inputText += argv[i];
+            inputText += " "; // Add space between words
+        }
+    } else {
+        // No arguments, prompt user for input
+        cout << "Enter a string: ";
+        getline(cin, inputText);
+    }
+
+    countAlphabets(inputText); // Call function to count and display frequency
+    return 0;
+}
