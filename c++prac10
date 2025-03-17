@@ -1,0 +1,79 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+class Triangle {
+private:
+    double side1, side2, side3;
+
+public:
+    // Default Constructor
+    Triangle() : side1(0), side2(0), side3(0) {}
+
+    // Constructor with three sides
+    Triangle(double a, double b, double c) : side1(a), side2(b), side3(c) {}
+
+    // Overloaded function to calculate area (using base & height)
+    double area(double base, double height) {
+        return 0.5 * base * height;
+    }
+
+    // Overloaded function to calculate area (using Heron's Formula)
+    double area() {
+        double s = (side1 + side2 + side3) / 2; // Semi-perimeter
+        return sqrt(s * (s - side1) * (s - side2) * (s - side3)); // Heron's formula
+    }
+
+    // Overloading Assignment Operator (=)
+    Triangle& operator=(const Triangle& other) {
+        if (this != &other) { // Avoid self-assignment
+            side1 = other.side1;
+            side2 = other.side2;
+            side3 = other.side3;
+        }
+        return *this;
+    }
+
+    // Overloading Equality Operator (==)
+    bool operator==(const Triangle& other) {
+        return (side1 == other.side1 && side2 == other.side2 && side3 == other.side3);
+    }
+
+    // Display Triangle Details
+    void display() {
+        cout << "Triangle Sides: " << side1 << ", " << side2 << ", " << side3 << endl;
+    }
+};
+
+// Main function to test Triangle class
+int main() {
+    Triangle t1(3, 4, 5); // Right-angled triangle
+    Triangle t2(5, 12, 13); // Another triangle
+
+    // Display Triangle Details
+    cout << "Triangle 1:\n";
+    t1.display();
+    cout << "Area using Heron's formula: " << t1.area() << endl;
+
+    cout << "\nTriangle 2:\n";
+    t2.display();
+    cout << "Area using Heron's formula: " << t2.area() << endl;
+
+    // Assignment Operator
+    cout << "\nAssigning t2 to t1...\n";
+    t1 = t2;
+    cout << "Triangle 1 after assignment:\n";
+    t1.display();
+
+    // Equality Operator
+    if (t1 == t2)
+        cout << "\nTriangle 1 and Triangle 2 are equal.\n";
+    else
+        cout << "\nTriangle 1 and Triangle 2 are not equal.\n";
+
+    // Area using base and height
+    cout << "\nArea of a Triangle with base=6 and height=8: " << t1.area(6, 8) << endl;
+
+    return 0;
+}
