@@ -1,0 +1,22 @@
+#include <iostream>
+#include <set>
+using namespace std;
+
+void removeDuplicates(int arr[], int size) {
+    set<int> uniqueElements(arr, arr + size); // Store unique elements
+
+    cout << "Array after removing duplicates: ";
+    for (int num : uniqueElements) {
+        cout << num << " ";
+    }
+    cout << endl;
+}
+
+int main() {
+    int arr[] = {4, 2, 7, 2, 4, 8, 1, 8, 9, 1};
+    int size = sizeof(arr) / sizeof(arr[0]);
+
+    removeDuplicates(arr, size);
+
+    return 0;
+}
