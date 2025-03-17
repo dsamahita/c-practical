@@ -1,0 +1,90 @@
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+
+// Student Class Definition
+class Student {
+public:
+    int rollNo;
+    char name[50];
+    char studentClass[10];
+    int year;
+    float totalMarks;
+
+    // Function to take student details as input
+    void input() {
+        cout << "Enter Roll No.: ";
+        cin >> rollNo;
+        cin.ignore(); // Ignore newline character
+
+        cout << "Enter Name: ";
+        cin.getline(name, 50);
+
+        cout << "Enter Class: ";
+        cin.getline(studentClass, 10);
+
+        cout << "Enter Year: ";
+        cin >> year;
+
+        cout << "Enter Total Marks: ";
+        cin >> totalMarks;
+    }
+
+    // Function to display student details
+    void display() {
+        cout << "\nRoll No.: " << rollNo;
+        cout << "\nName: " << name;
+        cout << "\nClass: " << studentClass;
+        cout << "\nYear: " << year;
+        cout << "\nTotal Marks: " << totalMarks;
+        cout << "\n---------------------------";
+    }
+};
+
+// Function to write student records to a file
+void writeToFile() {
+    ofstream outFile("students.dat", ios::binary); // Open file in binary mode
+
+    if (!outFile) {
+        cout << "Error opening file!";
+        return;
+    }
+
+    Student s;
+    cout << "\nEnter details of 5 students:\n";
+    for (int i = 0; i < 5; i++) {
+        cout << "\nStudent " << (i + 1) << ":\n";
+        s.input();
+        outFile.write(reinterpret_cast<char*>(&s), sizeof(s));
+    }
+
+    outFile.close();
+    cout << "\nStudent records saved successfully.\n";
+}
+
+// Function to read student records from a file
+void readFromFile() {
+    ifstream inFile("students.dat", ios::binary); // Open file in binary mode
+
+    if (!inFile) {
+        cout << "Error opening file!";
+        return;
+    }
+
+    Student s;
+    cout << "\nDisplaying student records from file:\n";
+    while (inFile.read(reinterpret_cast<char*>(&s), sizeof(s))) {
+        s.display();
+    }
+
+    inFile.close();
+}
+
+// Main function
+int main() {
+    writeToFile(); // Write student records to file
+    readFromFile(); // Read and display student records from file
+
+    return 0;
+}
