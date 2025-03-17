@@ -1,0 +1,151 @@
+#include <iostream>
+#include <limits> // For clearing input buffer
+using namespace std;
+
+// Function to show the address of each character in the string
+void showAddresses(char str[]) {
+    cout << "Character Addresses:\n";
+    for (int i = 0; str[i] != '\0'; i++) {
+        cout << "Character: " << str[i] << " at Address: " << (void*)&str[i] << endl;
+    }
+}
+
+// Function to concatenate two strings
+void concatenateStrings(char str1[], char str2[]) {
+    char result[200]; // Assuming max length of final string is 200
+    int i = 0, j = 0;
+
+    while (str1[i] != '\0') {
+        result[i] = str1[i];
+        i++;
+    }
+    while (str2[j] != '\0') {
+        result[i] = str2[j];
+        i++;
+        j++;
+    }
+    result[i] = '\0';
+    cout << "Concatenated String: " << result << endl;
+}
+
+// Function to compare two strings
+void compareStrings(char str1[], char str2[]) {
+    int i = 0;
+    while (str1[i] != '\0' && str2[i] != '\0') {
+        if (str1[i] != str2[i]) {
+            cout << "Strings are NOT equal." << endl;
+            return;
+        }
+        i++;
+    }
+    if (str1[i] == '\0' && str2[i] == '\0') {
+        cout << "Strings are EQUAL." << endl;
+    } else {
+        cout << "Strings are NOT equal." << endl;
+    }
+}
+
+// Function to calculate string length using pointers
+int stringLength(char *str) {
+    char *ptr = str;
+    int length = 0;
+    while (*ptr != '\0') {
+        length++;
+        ptr++;
+    }
+    return length;
+}
+
+// Function to convert lowercase to uppercase
+void convertToUppercase(char str[]) {
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (str[i] >= 'a' && str[i] <= 'z') {
+            str[i] = str[i] - 32;
+        }
+    }
+    cout << "Uppercase String: " << str << endl;
+}
+
+// Function to reverse the string
+void reverseString(char str[]) {
+    int length = stringLength(str);
+    char reversed[100];
+
+    for (int i = 0; i < length; i++) {
+        reversed[i] = str[length - i - 1];
+    }
+    reversed[length] = '\0';
+
+    cout << "Reversed String: " << reversed << endl;
+}
+
+int main() {
+    int choice;
+    char str1[100], str2[100];
+
+    do {
+        cout << "\nMENU:\n";
+        cout << "1. Show address of each character in string\n";
+        cout << "2. Concatenate two strings\n";
+        cout << "3. Compare two strings\n";
+        cout << "4. Calculate length of the string (using pointers)\n";
+        cout << "5. Convert all lowercase characters to uppercase\n";
+        cout << "6. Reverse the string\n";
+        cout << "7. Exit\n";
+        cout << "Enter your choice: ";
+        
+        cin >> choice;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // FIX: Clear input buffer
+
+        switch (choice) {
+            case 1:
+                cout << "Enter a string: ";
+                cin.getline(str1, 100);
+                showAddresses(str1);
+                break;
+
+            case 2:
+                cout << "Enter first string: ";
+                cin.getline(str1, 100);
+                cout << "Enter second string: ";
+                cin.getline(str2, 100);
+                concatenateStrings(str1, str2);
+                break;
+
+            case 3:
+                cout << "Enter first string: ";
+                cin.getline(str1, 100);
+                cout << "Enter second string: ";
+                cin.getline(str2, 100);
+                compareStrings(str1, str2);
+                break;
+
+            case 4:
+                cout << "Enter a string: ";
+                cin.getline(str1, 100);
+                cout << "Length of the string: " << stringLength(str1) << endl;
+                break;
+
+            case 5:
+                cout << "Enter a string: ";
+                cin.getline(str1, 100);
+                convertToUppercase(str1);
+                break;
+
+            case 6:
+                cout << "Enter a string: ";
+                cin.getline(str1, 100);
+                reverseString(str1);
+                break;
+
+            case 7:
+                cout << "Exiting program...\n";
+                break;
+
+            default:
+                cout << "Invalid choice! Please try again.\n";
+        }
+    } while (choice != 7);
+
+    return 0;
+}
